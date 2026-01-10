@@ -1,4 +1,3 @@
-# console_app.py
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
 # House energy
