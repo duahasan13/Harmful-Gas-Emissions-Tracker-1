@@ -101,6 +101,6 @@ st.write(f"Recycling score: {RecyclingScore}")
 
 st.title("Gemini Test")
 
-if st.text_input("Test Gemini"):
-    response = model.generate_content("Hello Gemini")
-    st.write(response.text)
+st.text_input("Test Gemini"):
+  response = model.generate_content("Hello Gemini")
+  st.write(response.text)
