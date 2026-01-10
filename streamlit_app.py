@@ -23,7 +23,7 @@ if Gmeasure == "volume":
         HouseG *= 0.3113
 
 # House area
-HouseA = st.number_input("House area", 10, 100000000000000000, 120)
+HouseA = st.number_input("House area", 10, 5000000, 120)
 Areaunit = st.selectbox("Is the area in ft²?", ["No", "Yes"])
 Area_in_m2 = True if Areaunit == "No" else False
 
