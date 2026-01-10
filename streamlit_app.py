@@ -2,16 +2,41 @@ import os
 import streamlit as st
 import google.generativeai as genai
 
+# Load API key from environment variables
 api_key = os.getenv("GEMINI_API_KEY")
-genai.configure(api_key=api_key)
+if not api_key:
+    st.error("Error: GEMINI_API_KEY not found in environment variables.")
+else:
+    client = genai.Client(api_key=api_key)
 
-model = genai.GenerativeModel("gemini-2.0-flash")
+    # Example variables (replace these with your existing variables in your code)
+    # VehicleNum, VehicleYear, VehicleBrand, VehicleModel, VehicleType, VehicleFuel, VehicleEmissions
+    # HouseT, HouseA_m2, RecyclingScore
 
-st.title("Gemini Test")
+    vehicle_summary = ""
+    for i in range(VehicleNum):
+        vehicle_summary += (
+            f"- {VehicleYear[i]} {VehicleBrand[i]} {VehicleModel[i]} ({VehicleType[i]}), "
+            f"Fuel: {VehicleFuel[i]}, Distance: {VehicleEmissions[i]:.2f} km/year\n"
+        )
 
-if st.text_input("Test Gemini"):
-    response = model.generate_content("Hello Gemini")
-    st.write(response.text)
+    prompt = (
+        f"Based on the following data, calculate the estimated annual carbon footprint (in kg CO2e) "
+        f"and provide recommendations:\n\n"
+        f"Household Monthly Energy (Electricity + Gas): {HouseT:.2f} kWh\n"
+        f"House Area: {HouseA_m2:.2f} m²\n"
+        f"Vehicles:\n{vehicle_summary}"
+        f"Recycling Score: {RecyclingScore}/20\n"
+    )
+
+    try:
+        st.write("\n--- Gemini Analysis ---")
+        response = client.models.generate_content(
+            model="gemini-2.0-flash-lite", contents=prompt
+        )
+        st.write(response.text)
+    except Exception as e:
+        st.error(f"Error: {e}")
     
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
