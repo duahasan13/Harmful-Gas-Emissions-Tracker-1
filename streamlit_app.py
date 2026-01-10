@@ -1,130 +1,136 @@
-import os
 import streamlit as st
-import google.generativeai as genai
 
-# Load API key from environment variables
-api_key = os.getenv("GEMINI_API_KEY")
-if not api_key:
-    st.error("Error: GEMINI_API_KEY not found in environment variables.")
-else:
-    client = genai.Client(api_key=api_key)
+# --- Page Configuration ---
+st.set_page_config(page_title="Carbon Footprint Calculator", page_icon="🌱")
 
-    # Example variables (replace these with your existing variables in your code)
-    # VehicleNum, VehicleYear, VehicleBrand, VehicleModel, VehicleType, VehicleFuel, VehicleEmissions
-    # HouseT, HouseA_m2, RecyclingScore
+# --- Constants & Factors ---
+FACTOR_ELEC = 0.4     # kg/kWh
+FACTOR_GAS = 0.2      # kg/kWh
+FACTOR_PETROL = 0.19  # kg/km
+FACTOR_DIESEL = 0.17  # kg/km
+FACTOR_HYBRID = 0.11  # kg/km
+FACTOR_EV = 0.05      # kg/km
 
-    vehicle_summary = ""
-    for i in range(VehicleNum):
-        vehicle_summary += (
-            f"- {VehicleYear[i]} {VehicleBrand[i]} {VehicleModel[i]} ({VehicleType[i]}), "
-            f"Fuel: {VehicleFuel[i]}, Distance: {VehicleEmissions[i]:.2f} km/year\n"
-        )
+st.title(" Personal Carbon Footprint Calculator")
+st.markdown("Calculate your annual CO2e emissions and discover how many trees are needed to offset your impact.")
 
-    prompt = (
-        f"Based on the following data, calculate the estimated annual carbon footprint (in kg CO2e) "
-        f"and provide recommendations:\n\n"
-        f"Household Monthly Energy (Electricity + Gas): {HouseT:.2f} kWh\n"
-        f"House Area: {HouseA_m2:.2f} m²\n"
-        f"Vehicles:\n{vehicle_summary}"
-        f"Recycling Score: {RecyclingScore}/20\n"
-    )
+# --- Sidebar / Navigation ---
+st.sidebar.header("Input Sections")
+tab1, tab2, tab3, tab4 = st.tabs(["Household", "Vehicles", " Recycling", "Results"])
 
-    try:
-        st.write("\n--- Gemini Analysis ---")
-        response = client.models.generate_content(
-            model="gemini-2.0-flash-lite", contents=prompt
-        )
-        st.write(response.text)
-    except Exception as e:
-        st.error(f"Error: {e}")
+# --- Tab 1: Household Energy ---
+with tab1:
+    st.header("Household Energy Consumption")
     
-from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
+    col1, col2 = st.columns(2)
+    with col1:
+        house_e = st.number_input("Monthly Electricity (kWh)", min_value=0.0, value=300.0)
+        has_renewable = st.checkbox("I have personal renewable energy")
+        personal_e = 0.0
+        if has_renewable:
+            personal_e = st.number_input("Renewable Contribution (kWh/month)", min_value=0.0, max_value=house_e, value=0.0)
+            
+    with col2:
+        gas_val = st.number_input("Monthly Gas Consumption", min_value=0.0, value=50.0)
+        gas_unit = st.selectbox("Gas Unit", ["kWh", "Cubic Meters (m³)", "Cubic Feet (ft³)"])
+        
+        # Gas Conversion logic
+        if gas_unit == "Cubic Meters (m³)":
+            house_g = gas_val * 11
+        elif gas_unit == "Cubic Feet (ft³)":
+            house_g = gas_val * 0.3113
+        else:
+            house_g = gas_val
 
-st.title("Harmful Gas Emissions Tracker")
-st.caption("Estimate your household's emissions for CO₂, Methane, and NOₓ")
+    house_area = st.number_input("Total House Area", min_value=0.0, value=100.0)
+    area_unit = st.radio("Area Unit", ["m²", "ft²"], horizontal=True)
+    house_a_m2 = house_area if area_unit == "m²" else house_area * 0.0929
 
-# House energy
-HouseE = st.number_input("Monthly house energy consumption (kWh)", 0, 2000000000, 900)
-PersonalT = st.selectbox("Do you have personal renewable energy sources?", ["No", "Yes"])
-PersonalE = 0
-if PersonalT == "Yes":
-    PersonalE = st.number_input("Monthly energy from personal sources (kWh)", 0, HouseE, 0)
+    # Calculation for House
+    house_emissions_annual = ((house_e - personal_e) * FACTOR_ELEC + house_g * FACTOR_GAS) * 12
 
-# Gas
-HouseG = st.number_input("Monthly gas consumption", 0, 2000000000000, 300)
-Gmeasure = st.selectbox("Is gas measured in volume (m³/ft³) or energy (kWh)?", ["kWh", "volume"])
-G_in_kwh = True
-if Gmeasure == "volume":
-    m3_check = st.selectbox("Is it in m³?", ["No", "Yes"])
-    if m3_check == "Yes":
-        G_in_kwh = False
+# --- Tab 2: Vehicles ---
+with tab2:
+    st.header("Transportation")
+    num_vehicles = st.number_input("How many vehicles do you own?", min_value=0, max_value=10, step=1, value=1)
+    
+    vehicle_emissions_annual = 0.0
+    total_km = 0.0
+    
+    for i in range(num_vehicles):
+        with st.expander(f"Vehicle {i+1} Details", expanded=True):
+            v_col1, v_col2 = st.columns(2)
+            with v_col1:
+                v_type = st.text_input(f"Type (e.g. SUV)", key=f"type_{i}")
+                v_fuel = st.selectbox(f"Fuel Type", ["Petrol", "Diesel", "Hybrid", "Electric"], key=f"fuel_{i}")
+            with v_col2:
+                dist = st.number_input(f"Annual Distance", min_value=0.0, value=10000.0, key=f"dist_{i}")
+                dist_unit = st.radio(f"Unit", ["km", "miles"], key=f"unit_{i}", horizontal=True)
+            
+            # Distance conversion
+            km = dist if dist_unit == "km" else dist * 1.609
+            total_km += km
+            
+            # Select factor
+            if v_fuel == "Diesel": factor = FACTOR_DIESEL
+            elif v_fuel == "Hybrid": factor = FACTOR_HYBRID
+            elif v_fuel == "Electric": factor = FACTOR_EV
+            else: factor = FACTOR_PETROL
+            
+            vehicle_emissions_annual += km * factor
+
+# --- Tab 3: Recycling ---
+with tab3:
+    st.header("Recycling Habits")
+    st.info("On a scale of 1 (Never) to 5 (Always), how often do you recycle:")
+    
+    recycling_items = ["Paper and Cardboard", "Plastic", "Glass", "Metals"]
+    recycling_scores = []
+    
+    cols = st.columns(2)
+    for idx, item in enumerate(recycling_items):
+        with cols[idx % 2]:
+            score = st.slider(item, 1, 5, 3)
+            recycling_scores.append(score)
+            
+    recycling_total = sum(recycling_scores)
+
+# --- Tab 4: Results & Report ---
+with tab4:
+    total_emissions = house_emissions_annual + vehicle_emissions_annual
+    trees_needed = int(total_emissions / 20)
+
+    st.header("Your Carbon Footprint Report")
+    
+    # Big Metrics
+    m1, m2, m3 = st.columns(3)
+    m1.metric("Total Emissions", f"{total_emissions:,.0f} kg")
+    m2.metric("Trees to Offset", f"{trees_needed}")
+    m3.metric("Recycling Score", f"{recycling_total}/20")
+
+    st.divider()
+
+    # Visual Breakdown
+    st.subheader("Breakdown")
+    col_a, col_b = st.columns(2)
+    with col_a:
+        st.write("**Household**")
+        st.write(f"Annual: {house_emissions_annual:,.2f} kg CO2e")
+    with col_b:
+        st.write("**Transportation**")
+        st.write(f"Annual: {vehicle_emissions_annual:,.2f} kg CO2e")
+
+    # Recommendations
+    st.subheader("Personalized Recommendations")
+    if recycling_total < 10:
+        st.warning("Your recycling score is low. Try to separate waste to reduce methane emissions from landfills.")
+    elif recycling_total < 15:
+        st.info("Good job on recycling! Consider looking for specialty recycling centers for electronics or textiles.")
     else:
-        HouseG *= 0.3113
+        st.success("Excellent recycling habits! You are significantly reducing your secondary footprint.")
 
-# House area
-HouseA = st.number_input("House area", 10, 5000000, 120)
-Areaunit = st.selectbox("Is the area in ft²?", ["No", "Yes"])
-Area_in_m2 = True if Areaunit == "No" else False
+    if vehicle_emissions_annual > house_emissions_annual:
+        st.lightbulb("Your transport emissions are higher than your home energy. Consider carpooling or checking tire pressure to improve fuel efficiency.")
 
-HouseT, HouseA_m2 = calculate_house_emissions(HouseE, PersonalE, HouseG, G_in_kwh, HouseA, Area_in_m2)
+    st.balloons()
 
-# Vehicles
-VehicleNum = st.number_input("Number of vehicles", 0, 1000000000, 1)
-VehicleType = []
-VehicleBrand = []
-VehicleModel = []
-VehicleYear = []
-VehicleFuel = []
-VehicleDistance = []
-VehicleDistance_in_km = []
-for count in range(VehicleNum):
-    st.subheader(f"Vehicle {count+1} Details")
-
-    v_type = st.text_input("Vehicle type", key=f"type_{count}")
-    v_brand = st.text_input("Brand", key=f"brand_{count}")
-    v_model = st.text_input("Model", key=f"model_{count}")
-    v_year = st.text_input("Year model", key=f"year_{count}")
-    v_fuel = st.text_input("Fuel type", key=f"fuel_{count}")
-
-    dist = st.number_input(
-        "Yearly distance",
-        min_value=0.0,
-        step=100.0,
-        key=f"dist_{count}"
-    )
-
-    dist_unit = st.selectbox(
-        "Is this distance in miles?",
-        ["No", "Yes"],
-        key=f"unit_{count}"
-    )
-
-    # Store values
-    VehicleType.append(v_type)
-    VehicleBrand.append(v_brand)
-    VehicleModel.append(v_model)
-    VehicleYear.append(v_year)
-    VehicleFuel.append(v_fuel)
-    VehicleDistance.append(dist)
-    VehicleDistance_in_km.append(False if dist_unit == "Yes" else True)
-
-if VehicleNum > 0:
-    VehicleEmissions = calculate_vehicle_emissions(
-        VehicleDistance,
-        VehicleDistance_in_km
-    )
-
-# Recycling
-Recycling = ["Paper and Cardboard", "Plastic", "Glass", "Metals"]
-Recyclescale = []
-for item in Recycling:
-    scale = st.slider(f"How often do you recycle {item}?", 1, 5, 3)
-    Recyclescale.append(scale)
-
-RecyclingScore = calculate_recycling_score(Recyclescale)
-
-# Display 
-st.header("Results")
-st.write(f"Total household energy consumption (kWh): {HouseT:.2f}")
-st.write(f"Vehicle distances (km): {VehicleEmissions}")
-st.write(f"Recycling score: {RecyclingScore}")
