@@ -5,7 +5,7 @@ st.title("Harmful Gas Emissions Tracker")
 st.caption("Estimate your household's emissions for CO₂, Methane, and NOₓ")
 
 # House energy
-HouseE = st.number_input("Monthly house energy consumption (kWh)", 0, 20000000000, 900)
+HouseE = st.number_input("Monthly house energy consumption (kWh)", 0, 2000000000, 900)
 PersonalT = st.selectbox("Do you have personal renewable energy sources?", ["No", "Yes"])
 PersonalE = 0
 if PersonalT == "Yes":
@@ -30,11 +30,11 @@ Area_in_m2 = True if Areaunit == "No" else False
 HouseT, HouseA_m2 = calculate_house_emissions(HouseE, PersonalE, HouseG, G_in_kwh, HouseA, Area_in_m2)
 
 # Vehicles
-VehicleNum = st.number_input("Number of vehicles", 0, 10000000000, 1)
+VehicleNum = st.number_input("Number of vehicles", 0, 1000000000, 1)
 VehicleDistance = []
 VehicleDistance_in_km = []
 for count in range(VehicleNum):
-    dist = st.number_input(f"Vehicle {count+1} yearly distance", 0, 10000000000000000000, 1000)
+    dist = st.number_input(f"Vehicle {count+1} yearly distance", 0, 50000000, 1000)
     VehicleDistance.append(dist)
     dist_unit = st.selectbox(f"Is vehicle {count+1} distance in miles?", ["No", "Yes"], key=f"unit{count}")
     VehicleDistance_in_km.append(False if dist_unit == "Yes" else True)
