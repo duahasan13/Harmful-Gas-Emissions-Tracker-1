@@ -55,8 +55,6 @@ for count in range(VehicleNum):
 
 VehicleEmissions = calculate_vehicle_emissions(VehicleDistance, VehicleDistance_in_km)
 
-VehicleEmissions = calculate_vehicle_emissions(VehicleDistance, VehicleDistance_in_km)
-
 # Recycling
 Recycling = ["Paper and Cardboard", "Plastic", "Glass", "Metals"]
 Recyclescale = []
@@ -68,6 +66,5 @@ RecyclingScore = calculate_recycling_score(Recyclescale)
 # Display
 print("\n--- Results ---")
 print(f"Total household energy consumption (kWh): {HouseT:.2f}")
-print(f"House area in m²: {HouseA_m2:.2f}")
 print(f"Vehicle distances (km): {VehicleEmissions}")
-print(f"Recycling score: {RecyclingScore}")
+print(f"Recycling score out of 20 : {RecyclingScore}")
