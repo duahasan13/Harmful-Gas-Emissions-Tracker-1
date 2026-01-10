@@ -1,7 +1,7 @@
 import streamlit as st
 
 # --- Page Configuration ---
-st.set_page_config(page_title="Carbon Footprint Calculator", page_icon="🌱")
+st.set_page_config(page_title="Harmful Gas Emissions Footprint Calculator", page_icon="🌱")
 
 # --- Constants & Factors ---
 FACTOR_ELEC = 0.4     # kg/kWh
@@ -11,7 +11,7 @@ FACTOR_DIESEL = 0.17  # kg/km
 FACTOR_HYBRID = 0.11  # kg/km
 FACTOR_EV = 0.05      # kg/km
 
-st.title(" Personal Carbon Footprint Calculator")
+st.title(" Personal Harmful Gas Emissions Footprint Calculator")
 st.markdown("Calculate your annual CO2e emissions and discover how many trees are needed to offset your impact.")
 
 # --- Sidebar / Navigation ---
@@ -100,7 +100,7 @@ with tab4:
     total_emissions = house_emissions_annual + vehicle_emissions_annual
     trees_needed = int(total_emissions / 20)
 
-    st.header("Your Carbon Footprint Report")
+    st.header("Your Harmful Gas Emissions Footprint Report")
     
     # Big Metrics
     m1, m2, m3 = st.columns(3)
