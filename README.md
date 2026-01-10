@@ -1,6 +1,6 @@
 # Harmful Gas Emissions Tracker
 
-A web-based application that estimates a user’s monthly environmental impact by calculating harmful gases: Carbon from electricity,gas,etc., Methane from unrecycled waste, and Nitrogen Oxides from car exhausts. The app converts all gases into CO₂-equivalent to give an easy to understand footprint for households and individuals.
+It's a web-based application that estimates a household’s or a person's monthly emissions for three harmful gases: Carbon from electricity,gas,etc., Methane from unrecycled waste, and Nitrogen Oxides from car exhausts. Each gas is reported separately in kilograms.
 
 ---
 
@@ -34,4 +34,10 @@ A web-based application that estimates a user’s monthly environmental impact b
 
 - Carbon: from electricity, gas, and vehicle fuel combustion  
 - Methane: from unrecycled waste
-- Nitrogen Oxides: from car exhaust
+- Nitrogen Oxides: from car exhaust  
+---
+
+## Tech Stack
+
+- Python  
+- Streamlit
