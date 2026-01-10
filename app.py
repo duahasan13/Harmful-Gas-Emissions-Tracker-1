@@ -3,12 +3,12 @@ import streamlit as st
 st.set_page_config(page_title="Harmful Gas Emissions Tracker", layout="centered")
 
 st.title("Harmful Gas Emissions Tracker")
-st.caption("Monthly household emissions for CO₂, Methane (CH₄), and Nitrogen Oxides (NOₓ)")
+st.caption("Monthly household/individual emissions for CO₂, Methane (CH₄), and Nitrogen Oxides (NOₓ)")
 
 st.header("Your Inputs")
 
 # User Inputs
-country = st.selectbox("Country of residence", ["UAE", "USA", "UK", "India", "Other"])
+country = st.selectbox("Country of residence", ["UAE", "USA", "UK", "Canada" "Other"])
 house_area = st.number_input("House area (m²)", 20, 1000, 120)
 
 electricity = st.number_input("Monthly electricity usage (kWh)", 0, 20000, 900)
