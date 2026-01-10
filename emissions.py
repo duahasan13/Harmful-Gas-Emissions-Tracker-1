@@ -1,4 +1,3 @@
-# emissions.py
 def calculate_house_emissions(HouseE, PersonalE, HouseG, G_in_kwh, HouseA, Area_in_m2):
     # Adjust house energy if personal renewable sources exist
     HouseE_adjusted = HouseE - PersonalE
