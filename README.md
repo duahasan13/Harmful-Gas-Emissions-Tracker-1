@@ -1,4 +1,4 @@
-# 🌱 Harmful Gas Emissions Tracker
+# Harmful Gas Emissions Tracker
 
 A web-based application that estimates a user’s **monthly environmental impact** by calculating harmful greenhouse gases:  
 **Carbon Dioxide (CO₂), Methane (CH₄) from unrecycled waste, and Nitrogen Oxides (NOₓ) from vehicle exhausts**.  
@@ -7,21 +7,21 @@ The app converts all gases into **CO₂-equivalent (CO₂e)** to give an easy-to
 
 ---
 
-## 🚀 Features
+## Features
 
-- ⚡ Tracks monthly electricity and gas usage  
-- 🏠 Considers house area for context  
-- 🌍 Country-specific emission factors  
-- 🚗 Calculates emissions from different vehicles  
-- ♻️ Models methane from unrecycled waste  
-- 💨 Calculates nitrogen oxides (NOₓ) from transport  
-- 🧮 Aggregates into total CO₂e footprint  
-- 📊 Displays a clear breakdown of contributions  
-- 🌐 Runs as a browser-based web app (no Python IDLE required)
+- Tracks monthly electricity and gas usage  
+- Considers house area for context  
+- Country-specific emission factors  
+- Calculates emissions from different vehicles  
+- Models methane from unrecycled waste  
+- Calculates nitrogen oxides (NOₓ) from transport  
+- Aggregates into total CO₂e footprint  
+- Displays a clear breakdown of contributions  
+- Runs as a browser-based web app (no Python IDLE required)
 
 ---
 
-## 🧾 User Inputs
+## User Inputs
 
 | Category | Input |
 |---------|-------|
@@ -34,7 +34,7 @@ The app converts all gases into **CO₂-equivalent (CO₂e)** to give an easy-to
 
 ---
 
-## 🧪 Emission Model
+## Emission Model
 
 - **CO₂**: from electricity, gas, and vehicle fuel combustion  
 - **Methane (CH₄)**: from unrecycled organic waste
