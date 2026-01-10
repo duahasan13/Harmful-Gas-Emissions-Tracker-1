@@ -1,4 +1,3 @@
-# Harmful-Gas-Emissions-Tracker-1
 # 🌱 Harmful Gas Emissions Tracker
 
 A web-based application that estimates a user’s **monthly environmental impact** by calculating harmful greenhouse gases:  
