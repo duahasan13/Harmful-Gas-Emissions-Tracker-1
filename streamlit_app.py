@@ -130,7 +130,7 @@ with tab4:
         st.success("Excellent recycling habits! You are significantly reducing your secondary footprint.")
 
     if vehicle_emissions_annual > house_emissions_annual:
-    st.info("Your transport emissions are higher than your home energy. Consider carpooling or checking tire pressure to improve fuel efficiency.")
+    st.warning("Your transport emissions are higher than your home energy. Consider carpooling or checking tire pressure to improve fuel efficiency.")
 
 
     st.balloons()
