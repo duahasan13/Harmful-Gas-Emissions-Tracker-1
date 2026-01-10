@@ -1,3 +1,18 @@
+import os
+import streamlit as st
+import google.generativeai as genai
+
+api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
+
+model = genai.GenerativeModel("gemini-pro")
+
+st.title("Gemini Test")
+
+if st.button("Test Gemini"):
+    response = model.generate_content("Hello Gemini")
+    st.write(response.text)
+    
 import streamlit as st
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
