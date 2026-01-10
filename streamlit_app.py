@@ -7,11 +7,6 @@ genai.configure(api_key=api_key)
 
 model = genai.GenerativeModel("gemini-2.0-flash")
 
-st.title("Gemini Test")
-
-if st.text_input("Test Gemini"):
-    response = model.generate_content("Hello Gemini")
-    st.write(response.text)
     
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
@@ -103,3 +98,9 @@ st.header("Results")
 st.write(f"Total household energy consumption (kWh): {HouseT:.2f}")
 st.write(f"Vehicle distances (km): {VehicleEmissions}")
 st.write(f"Recycling score: {RecyclingScore}")
+
+st.title("Gemini Test")
+
+if st.text_input("Test Gemini"):
+    response = model.generate_content("Hello Gemini")
+    st.write(response.text)
