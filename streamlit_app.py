@@ -1,22 +1,17 @@
-# gemini_api.py
-from dotenv import load_dotenv
 import os
-from google import genai
+import streamlit as st
+import google.generativeai as genai
 
-# Load .env
-load_dotenv()
-
-# Initialize client
 api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
-def ask_gemini(prompt):
-    """Send a prompt to Gemini and return the response"""
-    response = client.models.generate_content(
-        model="gemini-2.0-flash",
-        contents=prompt
-    )
-    return response.text
+model = genai.GenerativeModel("gemini-pro")
+
+st.title("Gemini Test")
+
+if st.button("Test Gemini"):
+    response = model.generate_content("Hello Gemini")
+    st.write(response.text)
     
 import streamlit as st
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
