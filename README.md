@@ -31,8 +31,8 @@ It's a web-based application that estimates a household’s or a person's monthl
 ## Emission Model
 
 - Carbon: from electricity, gas, and vehicle fuel combustion  
-- Methane: from unrecycled waste
-- Nitrogen Oxides: from car exhaust  
+- Methane: from unrecycled waste (One kilogram of methane is approximately equivalent to 28 kilograms of CO₂.)
+- Nitrogen Oxides: from car exhaust (converted to CO₂-equivalent using a climate impact factor.)
 ---
 
 ## Tech Stack
