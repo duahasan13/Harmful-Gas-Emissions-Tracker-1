@@ -34,12 +34,41 @@ VehicleNum = st.number_input("Number of vehicles", 0, 1000000000, 1)
 VehicleDistance = []
 VehicleDistance_in_km = []
 for count in range(VehicleNum):
-    dist = st.number_input(f"Vehicle {count+1} yearly distance", 0, 50000000, 1000)
+    st.subheader(f"Vehicle {count+1} Details")
+
+    v_type = st.text_input("Vehicle type", key=f"type_{count}")
+    v_brand = st.text_input("Brand", key=f"brand_{count}")
+    v_model = st.text_input("Model", key=f"model_{count}")
+    v_year = st.text_input("Year model", key=f"year_{count}")
+    v_fuel = st.text_input("Fuel type", key=f"fuel_{count}")
+
+    dist = st.number_input(
+        "Yearly distance",
+        min_value=0.0,
+        step=100.0,
+        key=f"dist_{count}"
+    )
+
+    dist_unit = st.selectbox(
+        "Is this distance in miles?",
+        ["No", "Yes"],
+        key=f"unit_{count}"
+    )
+
+    # Store values
+    VehicleType.append(v_type)
+    VehicleBrand.append(v_brand)
+    VehicleModel.append(v_model)
+    VehicleYear.append(v_year)
+    VehicleFuel.append(v_fuel)
     VehicleDistance.append(dist)
-    dist_unit = st.selectbox(f"Is vehicle {count+1} distance in miles?", ["No", "Yes"], key=f"unit{count}")
     VehicleDistance_in_km.append(False if dist_unit == "Yes" else True)
 
-VehicleEmissions = calculate_vehicle_emissions(VehicleDistance, VehicleDistance_in_km)
+if VehicleNum > 0:
+    VehicleEmissions = calculate_vehicle_emissions(
+        VehicleDistance,
+        VehicleDistance_in_km
+    )
 
 # Recycling
 Recycling = ["Paper and Cardboard", "Plastic", "Glass", "Metals"]
