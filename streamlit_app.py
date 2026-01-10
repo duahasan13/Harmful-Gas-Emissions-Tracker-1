@@ -31,6 +31,11 @@ HouseT, HouseA_m2 = calculate_house_emissions(HouseE, PersonalE, HouseG, G_in_kw
 
 # Vehicles
 VehicleNum = st.number_input("Number of vehicles", 0, 1000000000, 1)
+VehicleType = []
+VehicleBrand = []
+VehicleModel = []
+VehicleYear = []
+VehicleFuel = []
 VehicleDistance = []
 VehicleDistance_in_km = []
 for count in range(VehicleNum):
