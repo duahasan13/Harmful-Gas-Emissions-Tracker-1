@@ -27,12 +27,33 @@ HouseT, HouseA_m2 = calculate_house_emissions(HouseE, PersonalE, HouseG, G_in_kw
 
 # Vehicles
 VehicleNum = int(input("How many vehicles do you have? "))
-VehicleDistance = []
-VehicleDistance_in_km = []
+VehicleType = [None] * VehicleNum
+VehicleBrand = [None] * VehicleNum
+VehicleModel = [None] * VehicleNum
+VehicleYear = [None] * VehicleNum
+VehicleFuel = [None] * VehicleNum
+VehicleDistance = [None] * VehicleNum
+VehicleDistance_in_km = [True] * VehicleNum 
+
 for count in range(VehicleNum):
-    VehicleDistance.append(float(input(f"How much distance does vehicle {count+1} cover yearly? ")))
-    dist_unit = input("Is this distance in miles? (Yes or No) ").lower()
-    VehicleDistance_in_km.append(False if dist_unit == "yes" else True)
+    print(f"\n--- Vehicle {count+1} Details ---")
+    VehicleType[count] = input("What type of vehicle is it? ")
+    VehicleBrand[count] = input("What brand is this vehicle? ")
+    VehicleModel[count] = input("What is the model of this vehicle? ")
+    VehicleYear[count] = input("What year model is this vehicle? ")
+    VehicleFuel[count] = input("What type of fuel does your vehicle consume? ")
+    
+    dist = float(input("How much distance do you cover on this vehicle yearly? "))
+    dist_unit = input("Is the distance measured in miles? (Yes or No) ").lower()
+    
+    if dist_unit == "yes":
+        VehicleDistance[count] = dist
+        VehicleDistance_in_km[count] = False
+    else:
+        VehicleDistance[count] = dist
+        VehicleDistance_in_km[count] = True
+
+VehicleEmissions = calculate_vehicle_emissions(VehicleDistance, VehicleDistance_in_km)
 
 VehicleEmissions = calculate_vehicle_emissions(VehicleDistance, VehicleDistance_in_km)
 
