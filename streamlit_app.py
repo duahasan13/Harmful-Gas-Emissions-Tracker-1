@@ -13,7 +13,6 @@ if st.text_input("Test Gemini"):
     response = model.generate_content("Hello Gemini")
     st.write(response.text)
     
-import streamlit as st
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
 st.title("Harmful Gas Emissions Tracker")
