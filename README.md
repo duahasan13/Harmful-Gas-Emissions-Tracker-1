@@ -8,7 +8,6 @@ It's a web-based application that estimates a household’s or a person's monthl
 
 - Tracks monthly electricity and gas usage  
 - Considers house area for context  
-- Emission factors for specific countries
 - Calculates emissions from different vehicles  
 - Gets methane from unrecycled waste  
 - Calculates nitrogen oxides from transport    
@@ -23,7 +22,6 @@ It's a web-based application that estimates a household’s or a person's monthl
 |---------|-------|
 | Energy | Monthly electricity usage (kWh) |
 | Gas | Monthly gas usage (kWh or m³) |
-| Location | Country of residence |
 | Housing | House/apartment area (m²) |
 | Transport | Distance traveled by car, bus, etc. |
 | Recycling | Percentage of waste recycled |
