@@ -8,7 +8,7 @@ st.caption("Monthly household/individual emissions for CO₂, Methane (CH₄), a
 st.header("Your Inputs")
 
 # User Inputs
-country = st.selectbox("Country of residence", ["UAE", "USA", "UK", "Canada" "Other"])
+country = st.selectbox("Country of residence", ["UAE", "USA", "UK", "Canada", "Other"])
 house_area = st.number_input("House area (m²)", 20, 1000, 120)
 
 electricity = st.number_input("Monthly electricity usage (kWh)", 0, 20000, 900)
