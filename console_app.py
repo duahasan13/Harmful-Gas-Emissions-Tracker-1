@@ -96,7 +96,7 @@ total_emissions = house_emissions_annual + vehicle_emissions_annual
 
 # --- Final Results Display ---
 print("\n" + "="*50)
-print("             CARBON FOOTPRINT REPORT")
+print("             HARMFUL GAS EMISSIONS FOOTPRINT REPORT")
 print("="*50)
 
 print(f"\n1. Household Energy")
@@ -120,10 +120,10 @@ else:
 print(f"   - {rec_msg}")
 
 print("-" * 50)
-print(f"TOTAL ANNUAL CARBON FOOTPRINT: {total_emissions:,.2f} kg CO2e")
+print(f"TOTAL ANNUAL HARMFUL GAS EMISSIONS FOOTPRINT: {total_emissions:,.2f} kg CO2e")
 print("-" * 50)
 
 # for user reference
-trees_needed = total_emissions / 20  # Approx 20kg CO2 absorbed per tree per year
+trees_needed = total_emissions / 20  
 print(f"\nTo offset this amount, you would need to plant approximately {int(trees_needed)} trees this year.")
 print("="*50)
