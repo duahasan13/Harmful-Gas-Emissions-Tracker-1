@@ -9,7 +9,7 @@ model = genai.GenerativeModel("gemini-pro")
 
 st.title("Gemini Test")
 
-if st.button("Test Gemini"):
+if st.text_input("Test Gemini"):
     response = model.generate_content("Hello Gemini")
     st.write(response.text)
     
