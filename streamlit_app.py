@@ -1,18 +1,29 @@
-import os
 import streamlit as st
+import os
 import google.generativeai as genai
 
-api_key = os.getenv("GEMINI_API_KEY")
+from dotenv import load_dotenv
+load_dotenv() 
+
+api_key = st.secrets.get("GEMINI_API_KEY") or os.getenv("GEMINI_API_KEY")
+
+if not api_key:
+    st.error("No Gemini API key found! Add it in .env or Streamlit Secrets.")
+    st.stop()
+    
 genai.configure(api_key=api_key)
+model = genai.GenerativeModel("gemini-pro")
 
-model = genai.GenerativeModel("gemini-2.0-flash")
+st.title("Gemini AI Assistant")
 
-st.title("Gemini Test")
+prompt = st.text_area("Ask Gemini something:")
 
-User_input = st.text_input("Test Gemini")
-if User_input:
-    response = model.generate_content("Hello Gemini")
-    st.write(response.text)
+if st.button("Generate"):
+    if prompt.strip():
+        with st.spinner("Generating..."):
+            response = model.generate_content(prompt)
+            st.success("Done!")
+            st.write(response.text)
     
 from emissions import calculate_house_emissions, calculate_vehicle_emissions, calculate_recycling_score
 
