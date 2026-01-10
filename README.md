@@ -1,6 +1,6 @@
 # Harmful Gas Emissions Tracker
 
-It's a web-based application that estimates a household’s or a person's monthly emissions for three harmful gases: Carbon from electricity,gas,etc., Methane from unrecycled waste, and Nitrogen Oxides from car exhausts. Each gas is reported separately in kilograms.
+It's a web-based application that estimates a household’s or a person's monthly emissions for three harmful gases: Carbon from electricity,gas,etc., Methane from unrecycled waste, and Nitrogen Oxides from car exhausts. All gases are converted into CO₂e to give an easy to understand footprint.
 
 ---
 
