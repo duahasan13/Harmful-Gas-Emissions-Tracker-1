@@ -50,9 +50,8 @@ for item in Recycling:
 
 RecyclingScore = calculate_recycling_score(Recyclescale)
 
-# Display results
+# Display 
 st.header("Results")
 st.write(f"Total household energy consumption (kWh): {HouseT:.2f}")
-st.write(f"House area in m²: {HouseA_m2:.2f}")
 st.write(f"Vehicle distances (km): {VehicleEmissions}")
 st.write(f"Recycling score: {RecyclingScore}")
