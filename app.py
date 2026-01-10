@@ -9,17 +9,17 @@ st.header("Your Inputs")
 
 # User Inputs
 country = st.selectbox("Country of residence", ["UAE", "USA", "UK", "Canada", "Other"])
-house_area = st.number_input("House area (m²)", 20, 1000, 120)
+house_area = st.number_input("House area (m²)", 10, 1000000, 120)
 
-electricity = st.number_input("Monthly electricity usage (kWh)", 0, 20000, 900)
-gas = st.number_input("Monthly gas usage (kWh or m³)", 0, 20000, 300)
+electricity = st.number_input("Monthly electricity usage (kWh)", 0, 2000000, 900)
+gas = st.number_input("Monthly gas usage (kWh or m³)", 0, 2000000, 300)
 
 st.subheader("Transport")
-car_km = st.number_input("Distance traveled by car (km/month)", 0, 10000, 500)
-bus_km = st.number_input("Distance traveled by bus (km/month)", 0, 10000, 200)
+car_km = st.number_input("Distance traveled by car (km/month)", 0, 1000000, 500)
+bus_km = st.number_input("Distance traveled by bus (km/month)", 0, 1000000, 200)
 
 st.subheader("Recycling")
-recycling_rate = st.slider("Recycling rate (%)", 0, 100, 30)
+recycling_rate = st.slider("Recycling rate (%)", 0, 100, 25)
 
 # Calculate emissions
 if st.button("Calculate emissions"):
@@ -29,10 +29,10 @@ if st.button("Calculate emissions"):
     co2_total = co2_energy + co2_transport
 
     # Methane emissions (kg)
-    methane = (1 - recycling_rate / 100) * 0.5  # example kg/month
+    methane = (1 - recycling_rate / 100) * 0.5 
 
     # NOx emissions (kg)
-    nox = car_km * 0.0007  # example kg/month
+    nox = car_km * 0.0007 
 
     # Display results
     st.subheader("Monthly Emissions")
