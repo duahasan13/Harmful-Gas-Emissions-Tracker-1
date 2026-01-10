@@ -12,7 +12,7 @@ FACTOR_HYBRID = 0.11  # kg/km
 FACTOR_EV = 0.05      # kg/km
 
 st.title(" Personal Harmful Gas Emissions Footprint Calculator")
-st.markdown("Calculate your annual CO2e emissions and discover how many trees are needed to offset your impact.")
+st.markdown("Calculate your annual CO2e emissions (Carbon+Methane+Nitrogen Oxides converted into CO2e) and discover how many trees are needed to offset your impact.")
 
 # --- Sidebar / Navigation ---
 st.sidebar.header("Input Sections")
