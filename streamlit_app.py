@@ -9,7 +9,8 @@ model = genai.GenerativeModel("gemini-2.0-flash")
 
 st.title("Gemini Test")
 
-if st.text_input("Test Gemini"):
+User_input = st.text_input("Test Gemini")
+if User_input:
     response = model.generate_content("Hello Gemini")
     st.write(response.text)
     
