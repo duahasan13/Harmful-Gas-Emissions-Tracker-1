@@ -1,7 +1,7 @@
 import streamlit as st
 
 # --- Page Configuration ---
-st.set_page_config(page_title="Harmful Gas Emissions Footprint Calculator", page_icon="🌱")
+st.set_page_config(page_title="Harmful Gas Emissions Footprint Calculator")
 
 # --- Constants & Factors ---
 FACTOR_ELEC = 0.4     # kg/kWh
